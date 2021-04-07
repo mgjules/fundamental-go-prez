@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+	<title>The Fundamentals of Go</title>
+
+	<link rel="stylesheet" href="dist/reset.css" />
+	<link rel="stylesheet" href="dist/reveal.css" />
+	<link rel="stylesheet" href="dist/theme/black.css" id="theme" />
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme" />
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<a href="https://golang.org">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Go_Logo_Blue.svg/1200px-Go_Logo_Blue.svg.png"
+						alt="go logo" style="height:100px">
+				</a>
+				<h3>The Fundamentals of Go</h3>
+				<p>
+					<small>
+						Presentation by Mike
+					</small>
+				</p>
+				<aside class="notes">
+					<ul>
+						<li>Thanks for presence</li>
+						<li>Goal is to have fun while learning Go</li>
+						<li>Presentation is a high-level overview of the language</li>
+						<li>Coding sessions will focus on the technicalities</li>
+						<li>However, feel free to ask any question you have in the chat</li>
+					</ul>
+				</aside>
+			</section>
+
+			<section>
+				<h2>What is Go?</h2>
+				<p>
+					Go is an <b>open source</b> programming language.
+				</p>
+				<p>
+					It’s <b>statically typed</b> and produces <b>compiled</b> machine code binaries.</p>
+				</p>
+				<aside class="notes">
+					<ul>
+						<li>opensourced on Github (contribute, follow the project)</li>
+					</ul>
+				</aside>
+			</section>
+
+			<section>
+				<h2>Co-authors</h2>
+				<p class="italic">
+					It was designed at Google by <b>Robert Griesemer</b>, <b>Rob Pike</b>, and <b>Ken Thompson</b>.
+				</p>
+				<img
+					src="https://res.cloudinary.com/practicaldev/image/fetch/s--_lreIneX--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://pbs.twimg.com/media/CnPK1TtWgAQTDOn%3Fformat%3Djpg%26name%3Dsmall">
+				<aside class="notes">
+					<ul>
+						<li>Robert Griesemer: <br />Robert Griesemer is a Swiss computer scientist. He is best known for
+							his work on the Go programming language. Go is a statically typed, compiled programming
+							language. Prior to Go, He worked on Google's V8 JavaScript engine, the Sawzall language, the
+							Java HotSpot virtual machine, and the Strongtalk system.</li>
+						<li>Rob Pike: <br />Robert "Rob" C. Pike is a Canadian programmer and author. He is best known
+							for his work on the Go programming language and at Bell Labs, where he was a member of the
+							Unix team and was involved in the creation of the Plan 9 from Bell Labs and Inferno
+							operating systems, as well as the Limbo programming language.</li>
+						<li>Ken Thompson: <br />Kenneth Lane Thompson is an American pioneer of computer science.
+							Thompson worked at Bell Labs for most of his career where he designed and implemented the
+							original Unix operating system.</li>
+					</ul>
+				</aside>
+			</section>
+
+			<section>
+				<h2>Timeline (bird's eye)</h2>
+				<ul>
+					<li>Sep 21, 2007 - Whiteboard sketch</li>
+					<li>Nov 6, 2009 - Open Sourced</li>
+					<li>March 28, 2012 - Go 1.0</li>
+					<li>...</li>
+					<li>Apr 1, 2021 - Go 1.16.3</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2 data-id="code-title">A Go program</h2>
+				<pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|1|3|5,7|6" data-trim data-line-numbers>
+					package main
+
+					import "fmt"
+
+					func main() {
+						fmt.Println("Hello World!")
+					}
+				</code></pre>
+				<aside class="notes">
+					<ul>
+						<li>The first line is mandatory in Go. Go source code is grouped in packages.</li>
+						<li>The import statement allows us to use code from other libaries. In this case the std
+							library.</li>
+						<li>The function main denotes this is the entrypoint of our application (aka where execution
+							starts)</li>
+						<li>We then use the Println function from the fmt package to print the string "Hello World!"
+							with a newline
+						</li>
+					</ul>
+				</aside>
+			</section>
+
+			<section>
+				<h2>Who uses Go?</h2>
+				<img class="fragment"
+					src="https://lh6.googleusercontent.com/DR_ooAfHfSJ8u-1dV-OyqFl07SHKIb55rEBbob145E9i32PZmdWwPKNTejCbslcQ3-3R3h-Sdvec-cq9z9DgBTV_JnxQJ8N-MgucPJG-VBTaPN-XdW95P1s9ZU9K4OuBmMF5BLSCbZQ">
+				<p class="fragment"><u>2376</u> companies reportedly use Go in their tech stacks</p>
+				<aside class="notes">
+					<ul>
+						<li>These are just companies who REPORTED using Go. Many uses it but do not report like the past
+							companies I worked with.</li>
+					</ul>
+				</aside>
+			</section>
+
+			<section>
+				<h2>What makes Go so special?</h2>
+				<img src="https://media4.giphy.com/media/pPhyAv5t9V8djyRFJH/giphy-downsized.gif">
+				<aside class="notes">
+					<ul>
+						<li>You might say: This is all sweet and fine but what... why should I use Go?</li>
+						<li>I will try my best to tell you why, as those companies I listed, I chose Go my
+							microservices needs.</li>
+						<li>The following is not in a specific order</li>
+					</ul>
+				</aside>
+			</section>
+
+			<section>
+				<h2>Why?</h2>
+				<p>The computing landscape today is almost unrelated to the environment in which the languages being
+					used, mostly C++, Java, and Python, had been created.</p>
+				<p>
+					Modern landscape = multicore processors, networked systems, massive computation clusters, larger
+					scale...
+				</p>
+			</section>
+
+			<section>
+				<h2>Clarity</h2>
+
+				<img src="https://media.tenor.com/images/3d0620d40af7170268dd0e9dc5a104e5/tenor.gif">
+
+				<aside class="notes">
+					<blockquote cite="Gastón Jorquera">
+						The most important skill for a programmer is the ability to effectively communicate ideas.
+					</blockquote>
+					<small>Gastón Jorquera</small>
+					<ul>
+						<li>Code is read more than it is written. As developers, we are story-tellers and novel
+							writters. We need to do a good job at that and if the language enables it, all the better.
+						</li>
+						<li>We needed a language that would be easy to read and reason about.</li>
+						<li>The intention of the developer should be easily deduced by glancing at the code.</li>
+						<li>The first step towards writing maintainable code is making sure intent of the code is clear.
+						</li>
+					</ul>
+				</aside>
+			</section>
+
+			<section>
+				<h2>Simplicity</h2>
+
+				<img src="https://miro.medium.com/max/1200/1*NRHPCzMmF2Atx_aTtjiXhA.jpeg">
+
+				<aside class="notes">
+					<blockquote cite="Hans Hofmann">
+						The ability to simplify means to eliminate the unnecessary so that the necessary may speak
+					</blockquote>
+					<p><small>Hans Hofmann</small></p>
+
+					<p>aka "Does it spark joy?"</p>
+
+					<ul>
+						<li>We’ve all been in a situation where we say “I can’t understand this code”. We’ve all worked
+							on programs we were scared to make a change because we worried that it’ll break another part
+							of the program; a part you don’t understand and don’t know how to fix. </li>
+						<li>Clarity and simplicity are interlocking forces that lead to maintainable software.</li>
+					</ul>
+				</aside>
+			</section>
+
+			<section>
+				<h2>Productivity</h2>
+
+				<img src="https://imgs.xkcd.com/comics/compiling.png">
+
+				<aside class="notes">
+					<blockquote cite="Rob Pike">
+						“I started another compilation, turned my chair around to face Robert, and started asking
+						pointed
+						questions. Before the compilation was done, we’d roped Ken in and had decided to do something.”
+					</blockquote>
+					<small>Rob Pike</small>
+					<ul>
+						<li>How much time are we losing waiting for our tools or lost in a foreign codebase?</li>
+						<li>Waiting or idle time breaks the flow and makes us lose focus.</li>
+						<li>As a developer, Go allows us to quickly iterate quickly and feel productive</li>
+						<li>Example: if you execute `go run` you'd think Go is interpreting the source code, due to the
+							speed, but it's compiling it in fact.</li>
+					</ul>
+				</aside>
+			</section>
+
+			<section>
+				<h2>Go fmt</h2>
+				<img style="height:50vh"
+					src="https://media.crystallize.com/crystallize_marketing/images/@1024/648_developer_comics_tabs_vs_spaces.jpg">
+
+				<aside class="notes">
+					<ul>
+						<li>On the same topic as productivity, we did not want to waste time of futile quarrel over
+							formatting</li>
+						<li>Go provides a great tool to handle that for us and everyone uses it.</li>
+						<li>As such all codebase looks and feels similar from a formatting standpoint.</li>
+					</ul>
+				</aside>
+			</section>
+
+			<section>
+				<section>
+					<h2>Performance</h2>
+
+					<p>Read for yourself:<br /> <a
+							href="https://www.toptal.com/back-end/server-side-io-performance-node-php-java-go">Server-side
+							I/O Performance: Node vs. PHP vs. Java vs. Go</a></p>
+
+					<aside class="notes">
+						<ul>
+							<li>This is a "floor is lava" topic.</li>
+							<li>Go is extremely fast. Comparing it to PHP or Node or Java is not a fair comparison (i.e
+								compiled vs interpreted/JIT) in
+								many cases.</li>
+							<li>But you are free to read and experiment on your own ;)</li>
+							<li>In many of my microservices, I see performance as being key.
+							</li>
+							<li>Even under what could be considered heavy load, the Go service responsible to feed
+								events in RabbitMQ is
+								way underload: same for worker service. The core services have been benchmarked to
+								handle extremely more
+								requests.
+							</li>
+							<li>In effect, we haven't had a need yet to vertically or horizontally scale any of our
+								services.</li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Memory footprint</h2>
+
+					<img src="https://miro.medium.com/max/1250/1*zq5DjOJkuoXo6WTGR8Z_Gg.jpeg">
+
+					<aside class="notes">
+						<ul>
+							<li>Go is very lightweight both in terms of disk and memory space. speaking less than
+								50-100mb
+							</li>
+							<li>You can fit a lot of Go applications in a single server.</li>
+							<li>A big cost-saving considering that on a larger scale this can help turns 10-30 servers
+								into 2-3 servers (real stories about that)</li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Garbage collection</h2>
+
+					<img src="https://crl2020.imgix.net/wp-content/uploads/2019/04/GC_Mei-Li-Nieuwland-1.jpg">
+
+					<aside class="notes">
+						<ul>
+							<li>Someone or something has to do the dirty work. In languages like C, you did the dirty
+								work. This time of managing memory could be used to do more useful work.</li>
+							<li>I guess we are all familar with the "The Billion Dollar Mistake"</li>
+							<li>The Go garbage collector does a fantastic job of cleaning behind us without having to
+								worry about working with messy pointers and possibly causing memory corruptions.</li>
+							<li>The Go GC sports a great GC algorithm and runs amazingly fast causing no penalty cost in
+								99% of time.
+							</li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>CROSS-COMPILATION</h2>
+
+					<p>One source code compiles to many OS/Arch</p>
+
+					<img style="height: 30vh" src="./img/dist.png">
+
+					<aside class="notes">
+						<ul>
+							<li>This is a no brainer. The more the merrier!</li>
+							<li>Look! You can even deploy on Android and iOS haha!</li>
+							<li>On top of that it's easy: cross compiling is just a matter specifying which os and arch
+								you want to target.</li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Static-linked single binary</h2>
+
+					<img src="https://imgs.xkcd.com/comics/tech_loops.png">
+
+					<aside class="notes">
+						<ul>
+							<li>Do you remember the pain of having to distribute a project and ended up caring more
+								about the
+								dependencies and tooling than the project itself?</li>
+							<li>Distributing an application in Go is relatively effortless to the above: a single binary
+								to rule them all!</li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Concurrency</h2>
+
+					<img src="https://miro.medium.com/max/3000/1*mdkQasa9ipcJZrSGajSU1A.jpeg">
+
+					<aside class="notes">
+						<blockquote cite="Rob Pike">
+							“Concurrency is not parallelism”
+						</blockquote>
+						<small>Rob Pike</small>
+						<ul>
+							<li>A system is said to be concurrent if it can support two or more actions in progress at
+								the same time. A system is said to be parallel if it can support two or more actions
+								executing simultaneously.</li>
+							<li>In other words, Concurrency is about dealing with lots of things at once. Parallelism is
+								about doing lots of things at once.</li>
+							<li>Concurrency allows me to structure my services in such a way that they can deal
+								with many tasks at once and if possible, do them in parallel.</li>
+							<li>For instance, the service responsible for feeding the RabbitMQ with events, deal with
+								each event concurrently.</li>
+							<li>Go provides two concurrency primitives: Goroutines and Channels</li>
+							<li>A goroutine is a lightweight thread managed by the Go runtime. Go routines have very
+								little overhead and you can spin thousands or millions of them.</li>
+							<li>Channels are a typed conduit through which you can send and receive values. A way of
+								communicating across go routines.</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<h2>Parallelism</h2>
+
+					<img style="height: 25vh;" src="https://miro.medium.com/max/3000/1*mdkQasa9ipcJZrSGajSU1A.jpeg">
+					<img style="height: 25vh;" src="https://miro.medium.com/max/3000/1*mdkQasa9ipcJZrSGajSU1A.jpeg">
+				</section>
+			</section>
+
+			<section>
+				<h2>Testing & Debugging</h2>
+
+				<img src="https://miro.medium.com/max/760/1*PEMz4zRW7B2uI2UbRQlzjQ.gif">yle="height: 30vh"
+				src="./img/dist.png">
+
+				<aside class="notes">
+					<ul>
+						<li>Go has built-in support for testing and debugging!</li>
+						<li>This is important to us as we are running microservices and these have its own sets of
+							challenges compared to monoliths. We must be confident that these
+							microservices are doing their jobs well. So automated testing is a top priority.</li>
+						<li>This confidence highly reduces the stress when maintaining these services because in
+							essence, those tests locks the behaviour of the services ensuring we are not breaking our
+							API contract with ventures and other services.</li>
+					</ul>
+				</aside>
+			</section>
+
+			<section>
+				<h2>Benchmarking & Profiling</h2>
+
+				<img style="height:50vh"
+					src="https://about.sourcegraph.com/gophercon-2019/optimizing-without-a-blindfold-illustration.jpg">
+
+				<aside class="notes">
+					<ul>
+						<li>Go is really fast but does not mean you can't speed things up even more if required.
+						</li>
+						<li>As a reminder, the Go compiler is already optimizing our source code.</li>
+						<li>Benchmarking and profiling give me that extra confidence that my
+							services will be able to handle any future growth in load. Numbers are important here!</li>
+					</ul>
+				</aside>
+			</section>
+
+			<section data-background-iframe="https://golang.org/pkg/" data-background-interactive>
+				<div
+					style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.6); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
+					<h2>Standard library</h2>
+				</div>
+
+				<aside class="notes">
+					<ul>
+						<li>We needed a language that packed an excellent standard library.</li>
+						<li>These are the building blocks for any 3rd party libraries out there.</li>
+						<li>You can easily get away with just using the std library.</li>
+					</ul>
+				</aside>
+			</section>
+
+			<section data-background-iframe="https://golang.org/doc/" data-background-interactive>
+				<div
+					style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.6); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
+					<h2>Documentation</h2>
+				</div>
+
+				<aside class="notes">
+					<ul>
+						<li>Apart from the documentation on the website, application/library documentation is generated
+							from the comments in your source code. No more writing lengthy technical documentations. Let
+							your source code speaks for itself ;)</li>
+						<li>As you guessed, this is a big bonus for anyone (who likes writing technical documentations?).</li>
+					</ul>
+				</aside>
+			</section>
+
+			<section>
+				<h2>What is being made with Go?</h2>
+				<div style="display:flex; justify-content: space-around;">
+					<ul>
+						<li>Docker</li>
+						<li>Kubernetes</li>
+						<li>Traefik</li>
+						<li>Hugo</li>
+						<li>Terraform</li>
+						<li>Packer</li>
+						<li>Consul</li>
+						<li>Vault</li>
+						<li>Nomad</li>
+					</ul>
+					<ul>
+						<li>CockroachDB</li>
+						<li>Monzo (Bank)</li>
+						<li>SoundCloud</li>
+						<li>Caddy</li>
+						<li>Openshift</li>
+						<li>Gitea</li>
+						<li>Slack</li>
+						<li>CoreOS</li>
+						<li>...</li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				<h2>Getting Started</h2>
+				<ul>
+					<li><a href="">A Tour of Go</a></li>
+					<li><a href="">Effective Go</a></li>
+					<li><a href="https://www.youtube.com/watch?v=C8LgvuEBraI">Learn Go in 12 Minutes</a></li>
+					<li><a href="https://www.youtube.com/watch?v=LvgVSSpwND8">Concurrency in Go</a></li>
+					<li>BUILD SOMETHING FUN!</li>
+				</ul>
+			</section>
+		</div>
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/zoom/zoom.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/search/search.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
+			center: true,
+			controls: true,
+			progress: false,
+
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [
+				RevealZoom,
+				RevealNotes,
+				RevealSearch,
+				RevealMarkdown,
+				RevealHighlight,
+			],
+		});
+	</script>
+</body>
+
+</html>
